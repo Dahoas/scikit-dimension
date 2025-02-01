@@ -94,9 +94,9 @@ def proxy(tup):
     return function(X, **Dict)
 
 
-def get_nn(X, k, n_jobs=1):
+def get_nn(X, k, n_jobs=1, metric="minkowski"):
     """Compute the k-nearest neighbors of a dataset np.array (n_samples x n_dims)"""
-    neigh = NearestNeighbors(n_neighbors=k, n_jobs=n_jobs)
+    neigh = NearestNeighbors(n_neighbors=k, n_jobs=n_jobs, metric=metric)
     neigh.fit(X)
     dists, inds = neigh.kneighbors(return_distance=True)
     return dists, inds

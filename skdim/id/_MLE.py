@@ -79,6 +79,7 @@ class MLE(LocalEstimator):
         unbiased=False,
         neighborhood_based=True,
         K=5,
+        metric="minkowski",
     ):
 
         _, _, _, values = inspect.getargvalues(inspect.currentframe())
@@ -139,9 +140,9 @@ class MLE(LocalEstimator):
             dists, knnidx = precomputed_knn_arrays
         else:
             if self.neighborhood_based:
-                dists, knnidx = get_nn(X, k=self.n_neighbors, n_jobs=n_jobs)
+                dists, knnidx = get_nn(X, k=self.n_neighbors, n_jobs=n_jobs, metric=self.metric)
             else:
-                dists, knnidx = get_nn(X, k=self.K, n_jobs=n_jobs)
+                dists, knnidx = get_nn(X, k=self.K, n_jobs=n_jobs, metric=self.metric)
 
         if self.neighborhood_based:
             self.dimension_pw_ = self._maxLikPointwiseDimEst(dists)
